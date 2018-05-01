@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
+
 import './App.css';
 import './assets/font/fontawesome.css';
 import './assets/font/fa-brands.css';
+import './assets/font/fa-regular.css';
+
 import Header from './header/header';
+import Menu from './menu/menu';
+
 import { ThemeProvider } from 'styled-components';
 import styled from 'styled-components';
+
 import firebase from 'firebase';
+import skrollr from 'skrollr';
+
+const titleBgTop = 10;
 
 const theme = {
   theme1: { id: 1, bg: '#282855', text: 'white'},
@@ -14,30 +23,37 @@ const theme = {
 };
 
 const AppWrapper = styled.div`
-  &:before {
-    content: '';
-    position: absolute;
-    height: 120vh;
-    width: 100%;
-    background: linear-gradient(to bottom right, black 50%, white 50%);
-    z-index: -1;
-  }
 `;
 
-const Name = styled.div`
-  color: white;
+const Title = styled.div`
+  position: fixed;
   display: inline-block;
-  vertical-align: middle;
-  font-size: 100px;
   height: 100vh;
   padding: 50px;
 
-  &:before {
-    content: '';
-    height: 100%;
-    width: 0;
+  > div {
     display: inline-block;
     vertical-align: middle;
+  }
+
+  &:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+    width: 0;
+  }
+
+  .name {
+    color: white;
+    font-size: 100px;
+  }
+
+  .link {
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 40px;
   }
 `;
 
@@ -67,10 +83,34 @@ const Links = styled.div`
   }
 `;
 
+const Me = styled.div`
+  display: inline-block;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background-color: gray;
+  height: 500px;
+  width: 200px;
+`;
+
+const TitleBg = styled.div`
+  content: '';
+  position: ${props => props.isFixed ? 'fixed' : 'absolute'};
+  top: ${props => props.isFixed ? '0' : titleBgTop + '%'};
+  height: 120vh;
+  width: 100%;
+  background: linear-gradient(to bottom right, black 50%, white 50%);
+  z-index: -1;
+`;
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {theme: 'theme1'};
+
+    setTimeout(() => {
+      skrollr.init();
+    });
 
     var config = {
       apiKey: "AIzaSyDXLUb7_sZn_u5FW1Sd5KkC5_gh8vCZfYg",
@@ -97,16 +137,35 @@ class App extends Component {
       // 文字 Blog 影音 dance band kyudo 音樂 sing kyudo chado wafuku 程式
       <ThemeProvider theme={theme[this.state.theme]}>
         <AppWrapper>
-          <Name>Laura</Name>
+          <TitleBg 
+            isFixed
+            data-0="display: block;"
+            {...{['data-' + titleBgTop + 'p']: 'display: none;'}}></TitleBg>
+          <TitleBg
+            data-0="display: none;"
+            {...{['data-' + titleBgTop + 'p']: 'display: block;'}}></TitleBg>
+          <Title
+            data-0="top: 0px;"
+            {...{['data-' + titleBgTop + 'p']: 'top: 50px;'}}
+            data-99p="z-index: 1"
+            data-100p="z-index: -1">
+            <div>
+              <div className="name">Laura</div>
+              <div>
+                <a href="https://linkedin.com/in/l443018/" target="_blank" rel="noopener noreferrer" className="link fab fa-linkedin-in"> </a>
+                <a href="mailto: l443018@gmail.com" target="_blank" rel="noopener noreferrer" className="link far fa-envelope"> </a>
+              </div>
+            </div>
+          </Title>
+          <Menu></Menu>
+          {/* <Me></Me> */}
           <Links>
-            <a href="https://linkedin.com/in/l443018/" target="_blank" className="fab fa-linkedin"></a>
-            <a href="https://github.com/l443018" target="_blank" className="fab fa-github"></a>
-            <a href="https://medium.com/@l443018" target="_blank" className="fab fa-medium"></a>
-            <a href="https://www.slideshare.net/l443018" target="_blank" className="fab fa-slideshare"></a>
+            <a href="https://github.com/l443018" target="_blank" rel="noopener noreferrer" className="fab fa-github"> </a>
+            <a href="https://medium.com/@l443018" target="_blank" rel="noopener noreferrer" className="fab fa-medium"> </a>
+            <a href="https://www.slideshare.net/l443018" target="_blank" rel="noopener noreferrer" className="fab fa-slideshare"> </a>
             <br />
-            <a href="https://www.facebook.com/l443018" target="_blank" className="fab fa-facebook"></a>
-            <a href="https://www.instagram.com/l443018" target="_blank" className="fab fa-instagram"></a>
-            <a href="http://l443018.blogspot.tw/" target="_blank" className="fab fa-blogger"></a>
+            <a href="https://www.instagram.com/l443018" target="_blank" rel="noopener noreferrer" className="fab fa-instagram"> </a>
+            <a href="http://l443018.blogspot.tw/" target="_blank" rel="noopener noreferrer" className="fab fa-blogger"> </a>
           </Links>
           {/* <Header onSetTheme={x => this.handleSetTheme(x)}></Header> */}
           <Header></Header>

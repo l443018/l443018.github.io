@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { hexToRgb } from '../common-method';
 
 const HeaderWrapper = styled.div`
   height: 100vh;
