@@ -14,7 +14,7 @@ import styled from 'styled-components';
 import firebase from 'firebase';
 import skrollr from 'skrollr';
 
-const titleBgTop = 10;
+export const titleStartPercent = 10;
 
 const theme = {
   theme1: { id: 1, bg: '#282855', text: 'white'},
@@ -29,7 +29,7 @@ const Title = styled.div`
   position: fixed;
   display: inline-block;
   height: 100vh;
-  padding: 50px;
+  padding: 8vw;
 
   > div {
     display: inline-block;
@@ -47,13 +47,21 @@ const Title = styled.div`
   .name {
     color: white;
     font-size: 100px;
+    line-height: 1.1;
   }
 
   .link {
-    color: white;
+    color: black;
+    background-color: white;
     padding: 10px;
     cursor: pointer;
-    font-size: 40px;
+    font-size: 25px;
+    border-radius: 50%;
+    margin-right: 10px;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 `;
 
@@ -96,7 +104,7 @@ const Me = styled.div`
 const TitleBg = styled.div`
   content: '';
   position: ${props => props.isFixed ? 'fixed' : 'absolute'};
-  top: ${props => props.isFixed ? '0' : titleBgTop + '%'};
+  top: ${props => props.isFixed ? '0' : titleStartPercent + '%'};
   height: 120vh;
   width: 100%;
   background: linear-gradient(to bottom right, black 50%, white 50%);
@@ -140,20 +148,20 @@ class App extends Component {
           <TitleBg 
             isFixed
             data-0="display: block;"
-            {...{['data-' + titleBgTop + 'p']: 'display: none;'}}></TitleBg>
+            {...{['data-' + titleStartPercent + 'p']: 'display: none;'}}></TitleBg>
           <TitleBg
             data-0="display: none;"
-            {...{['data-' + titleBgTop + 'p']: 'display: block;'}}></TitleBg>
+            {...{['data-' + titleStartPercent + 'p']: 'display: block;'}}></TitleBg>
           <Title
             data-0="top: 0px;"
-            {...{['data-' + titleBgTop + 'p']: 'top: 50px;'}}
+            {...{['data-' + titleStartPercent + 'p']: 'top: 50px;'}}
             data-99p="z-index: 1"
             data-100p="z-index: -1">
             <div>
               <div className="name">Laura</div>
               <div>
                 <a href="https://linkedin.com/in/l443018/" target="_blank" rel="noopener noreferrer" className="link fab fa-linkedin-in"> </a>
-                <a href="mailto: l443018@gmail.com" target="_blank" rel="noopener noreferrer" className="link far fa-envelope"> </a>
+                <a href="mailto:l443018@gmail.com" target="_blank" rel="noopener noreferrer" className="link far fa-envelope"> </a>
               </div>
             </div>
           </Title>
