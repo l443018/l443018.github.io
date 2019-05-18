@@ -2,6 +2,9 @@
   "name": "l443018",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "<=9"
+  },
   "dependencies": {
     "color": "^3.0.0",
     "firebase": "^4.12.1",
@@ -9,14 +12,22 @@
     "postcss-cssnext": "^3.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-onclickoutside": "^6.8.0",
     "react-scripts": "1.1.1",
-    "skrollr": "^0.6.26",
     "styled-components": "^3.2.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build-js": "react-scripts build",
+    "build": "npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "node-sass-chokidar": "^1.3.4",
+    "npm-run-all": "^4.1.5"
   }
 }
