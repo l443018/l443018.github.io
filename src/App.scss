@@ -1,0 +1,28 @@
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(farthest-corner at right 50px, black 140px, rgba(255, 255, 255, 0.8));
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-out;
+}
+
+html.is-open-menu body {
+    overflow: hidden;
+}
+
+html.is-open-menu body:before {
+    opacity: 1;
+    pointer-events: auto;
+}

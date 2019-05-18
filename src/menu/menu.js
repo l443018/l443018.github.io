@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import styled from "styled-components";
 import onClickOutside from "react-onclickoutside";
-import { titleStartPercent } from '../App';
 
 const MenuWrapper = styled.div`
-  position: fixed;
+  position: absolute;
+  top: 28%;
   right: 0;
-  padding: 25px;
-  
-  &.skrollable-after {
+  height: 42%;
+  width: 52%;
+
+  ${props => props.theme.isMobile && `
     height: 60px;
     cursor: pointer;
     text-align: right;
@@ -18,58 +19,63 @@ const MenuWrapper = styled.div`
     &:not(.is-active):hover {
       opacity: 0.3;
     }
-  }
+  `}
 
   &.is-active {
     left: auto !important;
+    height: auto !important;
   }
 `;
 
 const MenuItem = styled.div`
   position: relative;
-  height: 33%;
   font-size: 40px;
   background-color: transparent;
+  margin-bottom: 6px;
   cursor: pointer;
-  padding-bootom: 0px;
 
-  &.skrollable-between,
-  &.is-active {
-    &:hover {
-      opacity: 0.3;
-    }
-  }
-
-  &.skrollable-after {
-    height: 2px;
-    width: auto;
+  ${props => props.theme.isMobile && `
+    height: 0;
+    width: 30px;
     overflow: hidden;
-    transition: padding-bottom 0.3s, height 0.3s;
+    transition: padding-bottom 0.3s, height 0.3s, border-width 0s;
+    left: 0% !important;
+    font-size: 0 !important;
+    border-bottom: 3px solid black;
 
-    &:before {
-      content: '';
-      display: block;
-      left: calc(100% - 20px);
-      right: 0px;      
-      background-color: black;
-      height: 2px;
-      width: 20px;
-      transition: opacity 0s, left 0s;
+    &::after {
+      content: "";
+      position: absolute;
+      left: 100%;
+      right: 0;
+      bottom: 7px;
+      height: 3px;
+      background: white;
+      transition: left 0.3s ease-out;
     }
+  `}
+
+  &[disabled] {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  &:hover {
+    opacity: 0.6;
   }
 
   &.is-active {
-    font-size: 25px !important;
+    font-size: 30px !important;
     height: 40px;
-    padding-bottom: 25px;
+    padding-bottom: 50px;
     transition-delay: 0.3s;
+    border-width: 0;
+    width: auto;
+    color: white;
+    border-color: white;
 
-    &:before {
-      opacity: 0;
+    &:hover::after {
       left: 0;
-      position: absolute;
-      width: auto;
-      transition: opacity 0.3s cubic-bezier(.97,.01,1,.02), left 0.3s cubic-bezier(0,1.15,.59,.93);
     }
   }
 
@@ -78,22 +84,24 @@ const MenuItem = styled.div`
   }
 
   &:nth-child(2) {
-    left: 29%;
-    margin-top: 5px;
+    left: 28%;
+    top: 30%;
   }
 
   &:nth-child(3) {
-    left: 0%;
-    margin-top: 5px;
+    left: 0;
+    top: 60%;
   }
 `;
 
 class Menu extends Component {
   constructor(props) {
     super(props);
-    this.state = {isActive: false};
-    this.handleClick = this.handleClick.bind(this);
-    document.addEventListener('scroll', () => {
+    this.state = {
+      isActive: false,
+    };
+
+    // document.addEventListener("scroll", () => {
       //   if (this.state.isActive) {
       //     element.classList.remove('is-active');
       //   } else {
@@ -103,68 +111,73 @@ class Menu extends Component {
       // this.setState(prevState => ({
       //   isActive: !prevState.isActive
       // }));
-    })
+    // });
   }
 
-  handleClick(e) {
-    const wrapper = document.querySelector('.menu-wrapper');
-    if (this.state.isActive) {
-      wrapper.classList.remove('is-active');
-    } else {
-      wrapper.classList.add('is-active');
-    }
+  handleClickItem(id) {
+    this.props.goAnchor(id);
+  }
 
-    [...document.getElementsByClassName('menu-item')].forEach(element => {
-      if (this.state.isActive) {
-        element.classList.remove('is-active');
-      } else {
-        element.classList.add('is-active');
-      }
-    });
-    this.setState(prevState => ({
-      isActive: !prevState.isActive
-    }));
+  handleClickWrapper(e) {
+    // const wrapper = document.querySelector(".menu-wrapper");
+    // if (this.state.isActive) {
+    //   wrapper.classList.remove("is-active");
+    //   document.documentElement.classList.remove("is-open-menu");
+    //   [...document.getElementsByClassName("menu-item")].forEach(element => {
+    //     element.classList.remove("is-active");
+    //   });
+    // } else {
+    //   wrapper.classList.add("is-active");
+    //   document.documentElement.classList.add("is-open-menu");
+    //   [...document.getElementsByClassName("menu-item")].forEach(element => {
+    //     element.classList.add("is-active");
+    //   });
+    // }
+
+    // this.setState(prevState => ({
+    //   isActive: !prevState.isActive
+    // }));
   }
 
   handleClickOutside() {
-    this.setState(prevState => ({
-      isActive: false
-    }));
-    [...document.getElementsByClassName('menu-item')].forEach(element => {
-      element.classList.remove('is-active');
-    });
-    document.querySelector('.menu-wrapper').classList.remove('is-active');
+    // this.setState(prevState => ({
+    //   isActive: false
+    // }));
+    // document.querySelector(".menu-wrapper").classList.remove("is-active");
+    // document.documentElement.classList.remove("is-open-menu");
+    // [...document.getElementsByClassName("menu-item")].forEach(element => {
+    //   element.classList.remove("is-active");
+    // });
   }
 
   render() {
     return (
       <MenuWrapper
         className="menu-wrapper"
-        onClick={this.handleClick}
+        onClick={this.handleClickWrapper}
         {...this.props}
-        data-0="left: 41%; height: 60%; top: 30%;"
-        {...{['data-' + (titleStartPercent + 5) + 'p']: 'left: 92%; height: 10%; top: 0%;'}}>
+      >
         <MenuItem
           id="firstMenuItem"
           className="menu-item"
-          data-0="font-size: 40px; left: 56%;"
-          {...{['data-' + (titleStartPercent + 4) + 'p']: 'font-size: 12px;left: 63%;'}}
-          {...{['data-' + (titleStartPercent + 5) + 'p']: 'font-size: 0px; left: 0%;'}}>
-          About</MenuItem>
+          onClick={() => this.handleClickItem('about')}
+          disabled
+        >
+          About
+        </MenuItem>
         <MenuItem
           className="menu-item"
-          data-anchor-target="#firstMenuItem"
-          data-0="font-size: 40px; left: 29%;"
-          {...{['data-' + (titleStartPercent + 4) + 'p']: 'font-size: 12px;left: 29%;'}}
-          {...{['data-' + (titleStartPercent + 5) + 'p']: 'font-size: 0px; left: 0%;'}}>
-          Works</MenuItem>
+          onClick={() => this.handleClickItem('works')}
+          disabled
+        >
+          Works
+        </MenuItem>
         <MenuItem
           className="menu-item"
-          data-anchor-target="#firstMenuItem"
-          data-0="font-size: 40px; left: 0%;"
-          {...{['data-' + (titleStartPercent + 4) + 'p']: 'font-size: 12px;left: 0%;'}}
-          {...{['data-' + (titleStartPercent + 5) + 'p']: 'font-size: 0px; left: 0%;'}}>
-          Links</MenuItem>
+          onClick={() => this.handleClickItem('links')}
+        >
+          Links
+        </MenuItem>
       </MenuWrapper>
     );
   }
