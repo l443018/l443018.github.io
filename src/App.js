@@ -1,150 +1,131 @@
 import React, { Component } from "react";
 
 import "./App.css";
-import "./assets/font/fontawesome.css";
-import "./assets/font/fa-brands.css";
-import "./assets/font/fa-regular.css";
+import "./assets/fonts/fontawesome.css";
+import "./assets/fonts/fa-brands.css";
+import "./assets/fonts/fa-regular.css";
 
-// import Header from "./header/header";
-// import About from "./about/about";
-import Links from "./links/links";
-import Menu from "./menu/menu";
-
-import { ThemeProvider } from "styled-components";
 import styled from "styled-components";
+import namePng from "./assets/images/name.png";
 
 // import firebase from 'firebase';
 
-const AppWrapper = styled.div``;
-
-const Title = styled.div`
-  display: inline-block;
+const Section1 = styled.div`
+  position: relative;
+  background-image: url(${namePng}), linear-gradient(to bottom, white 50%, black 50%);
+  background-size: 200px auto,100% 100%;
+  background-position: top calc(50% - 40px) left 15%,top left;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   height: 100vh;
-  padding: 8vw;
+  z-index: 1;
 
-  > div {
-    display: inline-block;
-    vertical-align: middle;
+  .clone-top {
+    width: 100%;
+    height: 50vh;
+    overflow: hidden;
+    position: fixed;
+    z-index: 1;
   }
 
-  &::before {
-    content: "";
-    display: inline-block;
-    vertical-align: middle;
-    height: 100%;
-    width: 0;
-  }
+  .clone-top-inner {
+    position: relative;
+    height: calc(100vh + 173px);
 
-  .name {
-    color: ${props => props.theme.isMobile ? 'black' : 'white'};
-    font-size: 100px;
-    line-height: 1.1;
-  }
-
-  .link {
-    color: black;
-    background-color: white;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 25px;
-    border-radius: 50%;
-    margin-right: 10px;
-
-    &:hover {
-      opacity: 0.8;
+    a {
+      color: black;
+      border-color: black;
     }
   }
 `;
 
-const TitleBg = styled.div`
-  content: "";
+const SocialMedias = styled.div`
   position: absolute;
-  top: 0;
-  height: ${props => props.theme.isMobile ? '100vh' : '120vh'};
-  width: 100%;
-  background: ${props => props.theme.isMobile ?
-    'linear-gradient(to top, black 41%, white 41%)'
-    : 'linear-gradient(to bottom right, black 50%, white 50%)'};
-  z-index: -1;
+  top: 50vh;
+  right: -10px;
+  padding: 30px 10%;
+  height: 113px;
+
+  a {
+    display: inline-block;
+    text-align: center;
+    font-size: 30px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    color: white;
+    border: 2px solid white;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+`;
+
+const Section2 = styled.div`
+  position: relative;
+  height: 100vh;
+  z-index: 2;
 `;
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      theme: this._getTheme("theme1"),
-      isMobile: window.innerWidth < 500,
     };
-
-    // var config = {
-    //   apiKey: "AIzaSyDXLUb7_sZn_u5FW1Sd5KkC5_gh8vCZfYg",
-    //   authDomain: "l443018-63fc1.firebaseapp.com",
-    //   databaseURL: "https://l443018-63fc1.firebaseio.com",
-    //   projectId: "l443018-63fc1",
-    //   storageBucket: "l443018-63fc1.appspot.com",
-    //   messagingSenderId: "277479446490"
-    // };
-    // firebase.initializeApp(config);
-    // firebase.database().ref("test").once("value", a => {
-    //   console.log('a', a.val());
-    // }, b => {
-    //   console.log('b', b);
-    // });
   }
 
-  handleGoAnchor(id) {
-    window.scrollTo(0, document.getElementById(id).offsetTop);
-  }
-
-  handleSetTheme(theme) {
-    this.setState({ theme: theme });
-  }
-
-  _getTheme(key) {
-    const theme = {
-      theme1: { id: 1, primary: "#000000" },
-      theme2: { id: 2, primary: "#fff1d3" },
-      theme3: { id: 3, primary: "#d8eec3" },
-    };
-
-    return { ...theme[key], ...{isMobile: window.innerWidth < 500} };
+  componentDidMount() {
+    document.addEventListener('scroll', (e) => {
+      document.querySelector('.clone-top').scrollTop = document.documentElement.scrollTop;
+    });
   }
 
   render() {
     return (
       // 文字 Blog 影音 dance band kyudo 音樂 sing kyudo chado wafuku 程式
-      <ThemeProvider theme={this.state.theme}>
-        <AppWrapper>
-          <Menu goAnchor={this.handleGoAnchor} />
-          <TitleBg />
-          <Title>
-            <div>
-              <div className="name">Laura</div>
-              <div>
+      <div>
+        <Section1>
+          <div className="clone-top">
+            <div className="clone-top-inner">
+              <SocialMedias>
                 <a
-                  href="https://linkedin.com/in/l443018/"
+                  href="https://www.linkedin.com/in/l443018/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="link fab fa-linkedin-in"
-                >
-                  {" "}
-                </a>
+                  className="fab fa-linkedin-in"
+                ></a>
                 <a
-                  href="mailto:l443018@gmail.com"
+                  href="https://www.facebook.com/l443018/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="link far fa-envelope"
-                >
-                  {" "}
-                </a>
-              </div>
+                  className="fab fa-facebook-f"
+                ></a>
+              </SocialMedias>
             </div>
-          </Title>
-          {/* <Header onSetTheme={x => this.handleSetTheme(x)}></Header> */}
-          {/* <About id="about" /> */}
-          <Links id="links" />
-        </AppWrapper>
-      </ThemeProvider>
+          </div>
+          <SocialMedias>
+            <a
+              href="https://www.linkedin.com/in/l443018/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="fab fa-linkedin-in"
+            ></a>
+            <a
+              href="https://www.facebook.com/l443018/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="fab fa-facebook-f"
+            ></a>
+          </SocialMedias>
+        </Section1>
+        <Section2>
+          test
+        </Section2>
+      </div>
     );
   }
 }
