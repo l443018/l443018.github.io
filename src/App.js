@@ -29,8 +29,8 @@ const App = () => {
           <a href="https://medium.com/@l443018" target="_blank" class="item fab fa-medium"> </a>
           <a href="https://www.slideshare.net/l443018" target="_blank" class="item fab fa-slideshare"> </a>
           <div className="seperator"></div>
-          <a href="https://l443018.blogspot.tw/" target="_blank" rel="noopener noreferrer" class="item fab fa-blogger"> </a>
-          <a href="https:/tarotlina.wordpress.com" target="_blank" rel="noopener noreferrer" class="item fab fa-wordpress"> </a>
+          <a href="https://l443018.blogspot.tw" target="_blank" rel="noopener noreferrer" class="item fab fa-blogger"> </a>
+          <a href="https://tarotlina.wordpress.com" target="_blank" rel="noopener noreferrer" class="item fab fa-wordpress"> </a>
         </div>
       </div>
     </div>
